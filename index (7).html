@@ -1,0 +1,986 @@
+<!DOCTYPE html><html lang="om"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Naol Learning</title><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF3F9;--cd:#fff;--tx:#10243E;--mu:#5B6F89;--ac:#FFC857;--ok:#1E9E6A;--er:#D64545;--ln:#D3DEEB;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10243E;--cd:#17355A;--tx:#F2F6FA;--mu:#9FB6D1;--ok:#5BD4A0;--er:#FF7A7A;--ln:#0B1A2E}}
+:root[data-theme="dark"]{--bg:#10243E;--cd:#17355A;--tx:#F2F6FA;--mu:#9FB6D1;--ok:#5BD4A0;--er:#FF7A7A;--ln:#0B1A2E}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Fredoka",system-ui,sans-serif}
+main{max-width:560px;margin:0 auto;padding:16px}
+h1{font-size:26px;margin:0}.mu{color:var(--mu)}
+nav{display:flex;gap:8px;margin:14px 0}
+button{font:inherit;color:var(--tx)}
+nav button{flex:1;padding:12px 4px;border-radius:14px;border:2px solid var(--ln);background:var(--cd);font-size:16px}
+nav button.on{background:var(--ac);color:#10243E;border-color:var(--ac);font-weight:600}
+.w{display:flex;align-items:center;gap:14px;background:var(--cd);border-radius:18px;padding:12px 14px;margin:9px 0;box-shadow:0 4px 0 var(--ln);cursor:pointer}
+.w .e{font-size:34px}.w b{font-size:22px;display:block}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sm{padding:8px 14px;border-radius:12px;border:2px solid var(--ln);background:var(--cd)}
+.big{width:100%;padding:14px;border-radius:14px;border:0;background:var(--ac);color:#10243E;font-weight:600;font-size:17px;margin-top:12px}
+.q{font-size:30px;font-weight:600;text-align:center;margin:22px 0}
+.o{display:block;width:100%;text-align:left;padding:14px;margin:8px 0;border-radius:14px;border:2px solid var(--ln);background:var(--cd);font-size:18px}
+.o.ok{border-color:var(--ok);background:var(--ok);color:#10243E}.o.er{border-color:var(--er);background:var(--er);color:#10243E}
+img{width:100%;border-radius:16px;margin-top:10px;box-shadow:0 6px 0 var(--ln)}
+input{font:inherit;padding:8px;border-radius:10px;border:2px solid var(--ln);background:var(--cd);color:var(--tx)}
+@media(prefers-reduced-motion:no-preference){.o,.w{transition:transform .1s}.o:active,.w:active{transform:scale(.98)}}
+:root{color-scheme:dark;--bg:#0b1a33;--cd:#17355A;--tx:#F2F6FA;--mu:#a9c0dc;--ok:#5BD4A0;--er:#FF7A7A;--ln:rgba(255,255,255,.2)}
+body{background:radial-gradient(120% 80% at 50% 0%,#24508a,#0b1a33 70%) fixed}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+main{position:relative;z-index:1}
+h1{font-size:36px;font-weight:600;background:linear-gradient(90deg,#FFC857,#ff8fa3,#7fd6ff,#FFC857);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45));animation:sh 6s linear infinite}
+nav button,.o,.sm,input{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#F2F6FA;font-size:14px}
+.o{font-size:18px}nav button.on{background:#FFC857;color:#10243E;box-shadow:0 0 22px rgba(255,200,87,.55)}
+.big{box-shadow:0 10px 24px rgba(255,200,87,.35)}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:14px;perspective:1000px}
+#v .w{display:block;padding:0;background:none;box-shadow:none;height:132px;margin:0;animation:rise .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*70ms)}
+.f{position:relative;height:100%;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.w.fl .f{transform:rotateY(180deg)}
+.ft,.bk{position:absolute;inset:0;border-radius:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:linear-gradient(145deg,rgba(255,255,255,.2),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.25);box-shadow:0 16px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.35)}
+.ft .e{font-size:40px;animation:fl 3s ease-in-out infinite;animation-delay:calc(var(--i)*-.4s)}
+.ft b,.bk b{font-size:21px}
+.bk{transform:rotateY(180deg);background:linear-gradient(145deg,#FFC857,#ff9e57);color:#10243E;text-align:center;padding:8px}
+.cal{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;perspective:900px}
+.c{aspect-ratio:1;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;font:inherit;color:#F2F6FA;opacity:.5;padding:0}
+.c.ok2{opacity:1;background:rgba(255,200,87,.2)}
+.c.td{background:#FFC857;color:#10243E;opacity:1;box-shadow:0 0 26px rgba(255,200,87,.75);transform:translateZ(24px) rotateX(-8deg)}
+.c small{font-size:11px}
+.ft{background:linear-gradient(145deg,rgba(36,78,130,.97),rgba(20,46,82,.97))}
+.o,.sm,nav button{background:rgba(23,53,90,.92)}
+.c{background:rgba(23,53,90,.92)}
+.big.alt{background:linear-gradient(90deg,#7fd6ff,#c9a7ff);box-shadow:0 10px 24px rgba(127,214,255,.3)}
+@keyframes sh{to{background-position:300% 0}}
+@keyframes rise{from{opacity:0;transform:translateY(40px) rotateX(-35deg)}}
+@keyframes fl{50%{transform:translateY(-7px) scale(1.12)}}
+@media(prefers-reduced-motion:reduce){h1,.ft .e,#v .w{animation:none}}
+</style></head><body><canvas id="bg"></canvas><main>
+<h1>Naol Learning</h1><div id="hd" class="mu"></div>
+<nav><button data-t="d">Har’a</button><button data-t="q">Quiz</button><button data-t="w">Wallpaper</button><button data-t="c">Kaalandarii</button></nav>
+<div id="v"></div></main>
+<script>
+const W=`achieve|galmaan gaʼuu|🏆
+benefit|buʼaa|🎁
+challenge|qormaata|🧗
+decision|murtoo|⚖️
+effort|yaalii|💪
+experience|muuxannoo|🎓
+improve|foyyeessuu|📈
+manage|bulchuu|🗂️
+opportunity|carraa|🚪
+responsible|itti gaafatamaa|🛡️
+achievement|milkaaʼina|🥇
+advice|gorsa|💬
+argue|wal falmuu|🗣️
+attitude|ilaalcha|😊
+behave|amala agarsiisuu|🎭
+believe|amanuu|🙏
+careful|of eeggataa|⚠️
+compare|wal bira qabuu|🔀
+confident|of amanaa|😎
+consider|yaaduu|🤔
+control|toʼachuu|🎮
+create|uumuu|🎨
+describe|ibsuu|📝
+develop|guddisuu|🌱
+discover|argachuu|🔍
+discuss|mariʼachuu|💭
+environment|naannoo|🌍
+especially|addatti|⭐
+familiar|beekamaa|👋
+forgive|dhiifama gochuu|🤝
+generous|arjaa|🎁
+honest|dhugaa dubbataa|✅
+imagine|fakkeessuu|🧠
+important|barbaachisaa|❗
+increase|dabaluu|⬆️
+influence|dhiibbaa|🌊
+knowledge|beekumsa|📚
+limit|daangaa|🚧
+notice|argee beekuu|👀
+organize|qindeessuu|🗃️
+patient|obsaa|⏳
+permission|hayyama|🟢
+prefer|caalatti filachuu|💖
+prepare|qophaaʼuu|🎒
+protect|eeguu|🛡️
+provide|dhiyeessuu|📦
+reduce|hirʼisuu|⬇️
+refuse|didduu|🚫
+relationship|hariiroo|🤝
+reliable|kan amanamu|🔒
+society|hawaasa|👥
+succeed|milkaaʼuu|🌟
+suggest|yaada dhiyeessuu|💡
+support|deeggaruu|🤲
+survive|lubbuun hafuu|🌿
+trust|amantaa|🔐
+understand|hubachuu|💡
+value|gatii|💎
+victory|injifannoo|🏁
+weakness|dadhabina|🥀
+ability|dandeettii|🧩
+absence|hin jiraachuu|🕳️
+accept|fudhachuu|✋
+admire|kabajuu|😍
+afford|kaffaluu dandeessisuu|💵
+agree|walii galuu|🤜
+allow|hayyamuu|🟩
+amazing|ajaaʼiba|🤩
+ancient|durii|🏺
+anxious|yaaddoo qabu|😟
+balance|madaallii|⚖️
+brilliant|ifaa, ogeessa|✨
+choose|filachuu|👆
+comfortable|mijataa|🛋️
+complete|xumuruu|✔️
+connect|walitti hidhuu|🔗
+contain|qabachuu|📦
+courage|jabina|🦁
+curious|beeku barbaadaa|🧐
+danger|balaa|☠️
+deliver|geessuu|🚚
+depend|hirkachuu|🌉
+destroy|balleessuu|💥
+disappear|dhabamuu|🌫️
+distance|fageenya|📏
+education|barnoota|🏫
+encourage|jajjabeessuu|📣
+energy|humna|⚡
+enjoy|itti gammaduu|🎉
+equal|wal-qixxaa|➗
+exact|sirrii|🎯
+explain|balʼisee ibsuu|✏️
+fear|sodaa|😨
+freedom|bilisummaa|🕊️
+future|egeree|🔮
+growth|guddina|🌳
+habit|amala|🔁
+journey|imala|🧳
+memory|yaadannoo|🧠
+peace|nagaa|☮️
+attention|xiyyeeffannoo|🎯
+attempt|yaaluu|🏹
+average|giddu galeessa|📊
+beautiful|bareedaa|🌺
+beginning|jalqaba|🌅
+bridge|riqicha|🌉
+brave|jajjaboo|🦸
+busy|hojii baayʼee qabaa|🐝
+cancel|haquu|❌
+capital|magaalaa guddittii|🏛️
+celebrate|ayyaaneffachuu|🎊
+century|jaarraa|📅
+clever|qalbii qabeessa|🦊
+collect|walitti qabuu|🧺
+communicate|wal-qunnamuu|📡
+competition|dorgommii|🏅
+condition|haala|📋
+confuse|burkuutuu|😵
+cost|baasii|💸
+culture|aadaa|🎭
+damage|miidhaa|🩹
+delay|turtii|⏰
+department|kutaa|🏢
+design|bocuu|📐
+detail|ibsa xiqqaa|🔬
+different|adda ta’e|🎨
+difficult|rakkisaa|🪨
+direction|kallattii|🧭
+discount|hirʼina gatii|🏷️
+dream|abjuu|🌙
+early|barii|🌄
+earn|argachuu (galii)|💰
+easy|salphaa|🍃
+effective|bu’aa kan fidu|⚙️
+emergency|balaa tasaa|🚨
+employ|qacaruu|👔
+empty|duwwaa|🥡
+enemy|diina|⚔️
+entire|guutuu|🌐
+error|dogoggora|🐞
+escape|miliquu|🏃
+event|taʼumsa|🎪
+evidence|ragaa|🔎
+example|fakkeenya|📌
+excellent|baayʼee gaarii|👌
+excuse|dhiifama|🙇
+exercise|shaakala|🏋️
+expect|abdachuu|🔭
+expensive|gatii guddaa|🤑
+explore|qorachuu|🗺️
+failure|kufaatii|📉
+famous|beekkamaa|🌠
+fashion|faashinii|👗
+festival|ayyaana|🎆
+flexible|mijataa ta’uu danda’u|🤸
+foreign|kan biyya alaa|✈️
+forest|bosona|🌲
+fortune|badhaadhummaa|🍀
+friendship|hiriyummaa|👫
+furniture|meeshaa mana|🪑
+gather|walitti qabamuu|🧲
+gentle|laafaa|🪶
+gift|kennaa|🎀
+goal|kaayyoo|⚽
+government|mootummaa|🗳️
+grateful|galateeffataa|🙌
+guest|keessummaa|🛎️
+guide|qajeelchuu|🔦
+guilty|yakkamaa|😔
+health|fayyaa|❤️
+heavy|ulfaataa|🐘
+hero|goota|🎖️
+history|seenaa|📜
+hobby|hobbii|🎸
+hospital|hospitaala|🏥
+humble|of gadi qabaa|🌾
+hungry|beelaʼaa|🍽️
+hurry|ariifachuu|💨
+idea|yaada|🗯️
+illness|dhukkuba|🤒
+image|fakkii|🖼️
+immediately|battalumatti|⏱️
+independent|of-danda’aa|🦅
+information|odeeffannoo|ℹ️
+injury|madaa|🤕
+inside|keessa|📥
+instead|bakka isaa|↔️
+instruction|qajeelfama|📖
+interest|fedhii|😃
+interrupt|gidduu seenuu|🛑
+invent|kalaquu|🔧
+invite|affeeruu|💌
+jealous|hinaaffaa qabu|😒
+joke|qoosaa|😂
+judge|abbaa murtii|🔨
+kind|garaa gaarii|🤗
+lucky|carraa gaarii qabu|🍀
+leader|geggeessaa|👑
+lesson|barnoota|📓
+local|kan naannoo|🏘️
+machine|maashinii|🤖
+major|ijoo|🔑
+manner|akkaataa|🎩
+market|gabaa|🛒
+marriage|gaaʼela|💍
+material|meeshaa|🧱
+measure|safaruu|🧮
+medicine|qoricha|💊
+member|miseensa|🪪
+mention|dubbachuu|🗨️
+method|mala|🛠️
+mind|sammuu|🧘
+modern|ammayyaa|🏙️
+moment|yeroo xiqqaa|🕐
+mountain|tulluu|⛰️
+movement|sosochii|🚶
+multiply|baayʼisuu|✖️
+mystery|iccitii|🕵️
+narrow|dhiphaa|🛤️
+nature|uumama|🏞️
+necessary|dirqama|☑️
+neighbor|ollaa|🏡
+normal|idileedhaa|🆗
+obey|ajajamuu|🫡
+object|wanta|🧸
+obvious|ifa ta’e|💯
+ordinary|baratamaa|🧍
+original|kan jalqabaa|🆕
+pain|dhukkubbii|😣
+parent|maatii|👪
+particular|addaa|🔖
+passenger|imaltuu|🚌
+payment|kaffaltii|💳
+perfect|mudaa hin qabne|🌈
+perform|raawwachuu|🎬
+period|yeroo|⌛
+personal|dhuunfaa|🙋
+physical|qaamaa|🦵
+pleasure|gammachuu|😌
+polite|kabajaan|🙂
+popular|jaallatamaa|🔥
+position|iddoo|📍
+possible|danda’amaa|🔓
+poverty|hiyyummaa|🥣
+power|aangoo|🔋
+practice|shaakaluu|🔂
+praise|faarsuu|👏
+pressure|dhiibbaa cimaa|⏲️
+promise|abdaachuu|🤞
+proud|boonuu|🦚
+quality|qulqullina|🏷️
+quick|saffisaa|🐇
+quiet|calla|🤫
+raise|ol kaasuu|🏗️
+rare|kan hin baratamne|💠
+reach|gaʼuu|🤏
+reason|sababa|❓
+recent|dhiyoo|🕒
+record|galmeessuu|🎙️
+region|godina|🗾
+relax|boqonnaa fudhachuu|🛌
+remain|hafuu|📍
+remember|yaadachuu|🧷
+repeat|irra deebiʼuu|♻️
+replace|bakka buʼuu|🔃
+require|barbaachisuu|🧾
+rescue|baraaruu|🚑
+respect|kabaja|🫶
+result|buʼaa|🧪
+review|irra deebiʼanii ilaaluu|🗒️
+reward|badhaasa|🥳
+rich|sooressa|👛
+river|laga|🏞️
+role|gahee|🧑‍🏫
+rule|seera|🚦
+safe|nageenya qabeessa|🦺
+satisfy|quubsuu|😋
+search|barbaaduu|🔭
+separate|addaan baasuu|✂️
+serious|cimaa|😐
+several|baayʼee|🔢
+share|qooduu|🍰
+shelter|iddoo dhokataa|⛺
+signal|mallattoo|🚥
+talent|ogummaa|🎻
+solve|furuu|🧩
+speed|saffisa|🚀
+spirit|ruuhii|👻
+stable|dhaabbataa|🏔️
+strange|kan hin beekamne|👽
+strength|cimina|💪
+struggle|qabsoo|🥊
+suddenly|tasa|⚡
+suffer|dhiphachuu|😢
+surprise|dinqisiifannoo|😲
+teach|barsiisuu|👨‍🏫
+trouble|rakkoo|🌧️
+truth|dhugaa|📖
+useful|fayyadamaa|🧰
+window|foddaa|🪟
+algorithm|alagoorizimii|🧮
+software|sooftiweerii|💾
+hardware|haardiweerii|🖥️
+network|neetworkii|🌐
+database|kuusaa daataa|🗄️
+server|saarvarii|🖧
+cloud|kuusaa duumessaa|☁️
+encryption|iccitiidhaan dhoksuu|🔐
+password|jecha iccitii|🔑
+interface|fuula itti fayyadamaa|🖱️
+automation|of-hojjechiisuu|🤖
+intelligence|ogummaa sammuu|🧠
+bandwidth|bal'ina karaa|📶
+bug|dogoggora koodii|🐛
+code|koodii|💻
+debug|dogoggora koodii sirreessuu|🪲
+deploy|hojii irra oolchuu|🚀
+developer|qopheessaa sooftiweerii|🧑
+digital|dijitaalaa|💠
+download|buufachuu|⬇️
+upload|ol fe'uu|⬆️
+firewall|dallaa ittisaa|🧱
+hacker|cabsaa sirnaa|🥷
+internet|interneetii|📡
+laptop|laaptoppii|💻
+latency|turtii sirnaa|⏱️
+blockchain|sirna sararaa|⛓️
+cryptography|iccitii barreeffamaa|🔏
+cybersecurity|nageenya saayibaraa|🛡️
+data|daataa|📊
+dataset|walitti qabama daataa|🗃️
+decentralized|walabummaan qoodame|🕸️
+framework|bu'uura hojii|🏗️
+infrastructure|bu'uuraalee misooma|🏭
+innovation|kalaqa|💡
+integration|walitti makuu|🔗
+model|moodeela|📐
+monitor|hordofuu|📺
+optimize|ol-aanaa gochuu|🎛️
+platform|waltajjii|🏟️
+processor|adeemsisaa|⚙️
+protocol|sirna walii-galtee|📜
+query|gaaffii daataa|❔
+scalable|guddachuu danda'u|🪜
+security|nageenya|🔒
+sensor|mallattoo fudhataa|📡
+simulation|fakkeessuu|🎮
+storage|kuusaa|💽
+streaming|yeroo ammaa ergamuu|📺
+system|sirna|🖥️
+update|haaromsuu|🔄
+virtual|fakkeenyaan|🥽
+wireless|wayyaa-dhabaa|📶
+analytics|xiinxala daataa|📊
+architecture|ijaarsa sirnaa|🏛️
+backup|kuusaa dabalataa|💾
+browser|barbaadaa weebii|🧭
+cache|kuusaa yeroo gabaabaa|⚡
+chip|chippii|🔲
+configuration|qindoomina|🔧
+dashboard|gabatee ilaalchaa|🎚️
+extension|dheeressa|🔌
+feature|amala sirnaa|✨
+gateway|balbala sirnaa|🚪
+keyboard|kiiboordii|⌨️
+malware|sooftiweerii hamaa|🦠
+mobile|mobaayilaa|📱
+notification|beeksisa|🔔
+offline|interneetii malee|📴
+online|interneetiin|🟢
+patch|sirreeffama|🩹
+pixel|pikseelii|🔳
+plugin|dabaltuu|🧩
+prototype|fakkeenya jalqabaa|🧪
+quantum|kuwaantamii|⚛️
+resolution|ifa fakkii|🖼️
+router|ruutarii|📶
+satellite|saatelaayitii|🛰️
+script|iskiriiptii|📜
+sync|walsimsiisuu|🔁
+template|haala qophaa'e|📋
+toggle|jijjiiruu|🔘
+tutorial|qajeelfama baruu|🎓
+username|maqaa fayyadamaa|🙍
+version|bifa sooftiweerii|🔢
+widget|wijeetii|🧩
+workflow|adeemsa hojii|🔀
+token|tookinii|🪙
+application|appii|📲
+account|akkaawuntii|👤
+access|seensa|🔓
+authentication|mirkaneessuu seensaa|🪪
+bitcoin|bitcoin|🪙
+crypto|kiriptoo|🪙
+ledger|kitaaba herregaa|📒
+transaction|jijjiirraa maallaqaa|🔁
+chart|chaartii|📈
+indicator|agarsiiftuu|🧭
+momentum|humna sochii|🚀
+breakout|cabuu gabaa|💥
+liquidate|gurguruun maallaqa gochuu|💧
+asset|qabeenya|🏦
+bullish|gabaan ol-aanuu abdii|🐂
+bearish|gabaan gadi bu'uu|🐻
+broker|jaalaa daldalaa|🧑
+commodity|oomisha daldalaa|🛢️
+currency|maallaqa biyyaa|💱
+deposit|baankii kuusuu|🏧
+dividend|kaffaltii bu'aa|💵
+equity|qooda abbummaa|⚖️
+exchange|jijjiirraa|🔄
+forex|jijjiirraa maallaqa alaa|💱
+futures|waadaa gara fuula duraa|📆
+hedge|of-eegsa|🛡️
+income|galii|💰
+inflation|olka'iinsa gatii|📈
+invest|invastii gochuu|🌱
+investor|invastarii|💼
+leverage|humna liqaan|🏋️
+liquidity|maallaqa banaa|💧
+loan|liqaa|🏦
+loss|kasaaraa|📉
+margin|daangaa bu'aa|📐
+mortgage|liqaa mana|🏠
+order|ajaja daldalaa|📝
+portfolio|walitti qabama invastimantii|🗂️
+profit|bu'aa daldalaa|💹
+rally|ol-ba'uu gabaa|🚀
+recession|gadi bu'uu dinagdee|⬇️
+resistance|dhiibbaa gabaa|🧱
+retail|daldala xiqqaa|🛒
+revenue|galii waliigalaa|💰
+spread|garaagarummaa gatii|↔️
+stock|qooda kampaanii|📈
+volatility|jijjiirama gatii|🎢
+trader|daldalaa gabaa|📊
+trend|qajeelcha gabaa|📈
+volume|baay'ina daldalaa|🔊
+yield|bu'aa invastimantii|🌾
+accountant|herregaa|🧾
+audit|sakatta'a herregaa|🔍
+bankruptcy|kufaatii maallaqaa|💥
+budget|baajata|📒
+bond|waraqaa liqaa|📄
+cash|maallaqa harkaa|💵
+credit|liqaa|💳
+debt|ba'aa liqaa|⛓️
+deficit|hanqina|📉
+demand|barbaachisummaa gabaa|📈
+supply|dhiyeessii|📦
+economy|dinagdee|🌐
+export|gara alaatti ergu|🚢
+import|gara keessaatti galchuu|📥
+fee|kaffaltii|💲
+fund|kuusaa maallaqaa|🏦
+tax|gibira|🧾
+tariff|gibira daangaa|🛃
+wealth|sooromuu|💎
+negotiate|marii waliigaltee|🗣️
+persuade|amansiisuu|🎯
+articulate|ifatti ibsuu|🗣️
+eloquent|dubbii qabeessa|🎤
+argument|falmii|⚔️
+assertive|jabaatee dubbataa|💪
+concise|gabaabaa fi ifa|✂️
+credibility|amanamummaa|🏅
+diplomatic|tooftaa qabeessa|🕊️
+emphasize|cimsuu|❗
+fluent|haasa'a salphaa|🌊
+persuasive|amansiisaa|📣
+rebuttal|deebii falmii|↩️
+rhetoric|dubbii-ogummaa|🎭
+tactful|of eeggannoo|🧤
+clarify|ifa baasuu|🔆
+elaborate|bal'isanii ibsuu|📝
+summarize|cuunfuu|📋
+propose|yaada dhiyeessuu|📤
+agenda|sagantaa|📅
+objective|kaayyoo guddaa|🎯
+strategy|tooftaa|♟️
+tactic|mala xiqqaa|🧩
+priority|dursa|🥇
+deadline|yeroo dhumaa|⏰
+milestone|milkaa'ina tarkaanfii|🚩
+stakeholder|qooda-fudhataa|👥
+shareholder|abbaa qooda|📜
+partnership|hirmaannaa|🤝
+negotiation|marii|🗣️
+contract|waliigaltee|📃
+clause|keewwata|📑
+compliance|ajajamuu seeraa|✅
+regulation|dambii|📏
+liability|itti gaafatamummaa|⚖️
+ownership|abbummaa|🔑
+authority|aangoo seeraa|🏛️
+leadership|geggeessummaa|👑
+management|bulchiinsa|🗂️
+delegate|ergamsiisuu|📨
+collaborate|waliin hojjechuu|🤲
+feedback|yaada deebii|💬
+efficiency|bu'a-qabeessummaa|⚡
+productivity|oomishtummaa|🏭
+sustainable|itti fufiinsa qabu|♻️
+competitive|dorgomaa|🥊
+advantage|bu'aa addaa|🏆
+disruption|jeequmsa|💥
+entrepreneur|daldalaa jalqabaa|🚀
+startup|dhaabbata haaraa|🌱
+venture|carraa daldalaa|🎲
+visionary|ilaalcha fuula duraa qabu|🔭
+resilient|dandamataa|🛡️
+adaptable|of-jijjiiruu danda'aa|🦎
+analyze|xiinxaluu|🔬
+assess|madaaluu|⚖️
+forecast|tilmaama|🔮
+estimate|tilmaamuu|📐
+calculate|herreguu|🧮
+insight|hubannoo|💡
+metric|safartuu|📏
+benchmark|safartuu bu'uuraa|📍
+quota|ramaddii|📊
+negotiable|marii danda'u|🤝
+proposal|yaada dhiyaate|📄
+presentation|dhiyeessa|📽️
+pitch|yaada gabaasuu|🎤
+discourse|haasaa|💭
+dialogue|haasaa lamaa|💬
+debate|falmii ifaa|🎙️
+statement|ibsa|📣
+conclude|murteessuu|🏁
+neuron|neeroonii|🤖
+neural|kan neeroonii|🧠
+training|leenjii moodeelaa|🦾
+inference|xumura baasuu moodeelaa|💬
+prompt|ajaja AI|🤖
+chatbot|chaatbootii|🧠
+robotics|roobootiksii|🦾
+parameter|parameetira|💬
+classifier|gareessaa|🤖
+regression|walitti-dhufeenya lakkoofsaa|🧠
+clustering|gareessuu daataa|🦾
+label|mallattoo maqaa daataa|💬
+bias|loogii|🤖
+accuracy|sirrummaa|🧠
+overfitting|baay'ee baruu|🦾
+generative|uumaa|💬
+synthetic|kan hojjetame|🤖
+agent|bakka bu'aa sirnaa|🧠
+pipeline|sararaa adeemsaa|🦾
+compute|humna herregaa|💬
+repository|kuusaa koodii|💻
+commit|galmeessuu jijjiirama|🛠️
+branch|damee koodii|🔧
+merge|koodii walitti makuu|🧑
+compiler|jijjiirtuu koodii|💻
+runtime|yeroo hojjetu|🛠️
+function|hojii koodii|🔧
+variable|jijjiiramaa|🧑
+array|tarree|💻
+loop|marsaa|🛠️
+syntax|caasaa barreeffamaa|🔧
+endpoint|xumura API|🧑
+request|gaaffii sirnaa|💻
+response|deebii sirnaa|🛠️
+session|yeroo hojii|🔧
+cookie|kukii|🧑
+domain|doomeenii|💻
+cipher|iccitii-barreeffama|🛠️
+binary|lakkoofsa lama|🔧
+kernel|bu'uura sirnaa|🧑
+thread|dhaaba hojii|💻
+queue|tarree eegumsaa|🛠️
+stack|tuuta|🔧
+refactor|koodii haaromsuu|🧑
+legacy|dhaala durii|💻
+module|kutaa sirnaa|🛠️
+dependency|hirkattummaa|🔧
+container|kuusaa hojii|🧑
+cluster|gareewwan sirnaa|💻
+virtualization|fakkeessuu sirnaa|🛠️
+redundancy|baay'ina dabalataa|🔧
+uptime|yeroo banaa|🧑
+downtime|yeroo cufaa|💻
+bottleneck|dhiphina adeemsaa|🛠️
+throughput|saffisa darbuu|🔧
+traffic|tiraafikii|🧑
+packet|paakeetii|💻
+codec|kodeekii|🛠️
+phishing|sobaan seensa fudhachuu|🛡️
+ransomware|sooftiweerii kaffaltii gaafatu|🔒
+vulnerability|laafina sirnaa|🦠
+exploit|laafina fayyadamuu|🕵️
+breach|cabuu nageenyaa|🛡️
+authorization|hayyama seensaa|🔒
+biometric|baayoometrikii|🦠
+antivirus|farra vaayirasii|🕵️
+spyware|sooftiweerii sutuu|🛡️
+credential|ragaa seensaa|🔒
+surveillance|to'annoo|🦠
+privacy|dhuunfaa eegumsa|🕵️
+anonymity|maqaa dhoksuu|🛡️
+forensic|qorannoo yakkaa|🔒
+threat|yaaddoo balaa|🦠
+arbitrage|arbitiraajii|📈
+candlestick|kaandilistiikii|📉
+bid|gatii kennuu|💹
+ask|gatii gaafatamu|🐂
+slippage|dhiibbaa gatii|📈
+swap|jijjiirraa wal-bira|📉
+spot|gabaa ammaa|💹
+derivative|firii dhufe|🐂
+option|filannoo daldalaa|📈
+warrant|ragaa mirga|📉
+diversify|gosa baay'ataa gochuu|💹
+allocation|ramaddii qabeenyaa|🐂
+rebalance|deebisanii madaaluu|📈
+valuation|madaallii gatii|📉
+bubble|burtii gabaa|💹
+crash|kufaa gabaa|🐂
+correction|sirreeffama gabaa|📈
+consolidation|walitti makamuu gatii|📉
+distribution|raabsuu|💹
+capitulation|of-kennuu gabaa|🐂
+sentiment|miira gabaa|📈
+fundamental|bu'uuraa|📉
+technical|teekinikaalaa|💹
+overbought|baay'ee bitame|🐂
+oversold|baay'ee gurguramame|📈
+uptrend|qajeelcha ol-ba'uu|📉
+downtrend|qajeelcha gadi bu'uu|💹
+sideways|gara cinaa|🐂
+pullback|duubatti deebii|📈
+reversal|garagaluu gabaa|📉
+divergence|garaagarummaa agarsiiftuu|💹
+volatile|jijjiiramaa gabaa|🐂
+collateral|wabii|📈
+default|liqaa kuffisuu|📉
+solvency|dandeettii kaffaluu|💹
+insolvency|dandeettii kaffaluu dhabuu|🐂
+capitalization|guddina qabeenyaa|📈
+listing|galmee gabaa|📉
+merger|walitti makamuu dhaabbataa|💹
+acquisition|bitachuu dhaabbataa|🐂
+takeover|to'achuu dhaabbataa|📈
+dilution|hir'isuu qooda|📉
+runway|yeroo maallaqaa hafe|🚀
+scale|bal'isuu daldalaa|🌱
+pivot|tooftaa jijjiiruu|🎯
+traction|sochii gabaa|📣
+retention|maamila qabachuu|🚀
+churn|maamila dhabuu|🌱
+conversion|jijjiirraa maamilaa|🎯
+funnel|fannoo daldalaa|📣
+branding|maqaa daldalaa|🚀
+campaign|duula|🌱
+audience|dhaggeeffattoota|🎯
+engagement|hirmaannaa maamilaa|📣
+segment|kutaa maamilaa|🚀
+demographic|ramaddii lakkoofsaa|🌱
+subscription|kaffaltii yeroo|🎯
+pricing|gatii kaffaluu|📣
+loyalty|amanamummaa maamilaa|🚀
+customer|maamila|🌱
+supplier|dhiyeessaa|🎯
+vendor|gurgurtuu|📣
+logistics|loojistiksii|🚀
+inventory|kuusaa meeshaa|🌱
+warehouse|mana kuusaa|🎯
+shipment|ergaa meeshaa|📣
+procurement|bitaa dhaabbataa|🚀
+outsource|alaan hojjechiisuu|🌱
+contractor|kontiraaktara|🎯
+freelance|of-danda'ee hojjechuu|📣
+remote|fagoo hojjechuu|🚀
+hybrid|makaa|🌱
+workforce|humna hojjetaa|🎯
+recruit|hojjetaa filachuu|📣
+onboarding|simannaa hojjetaa|🚀
+mentor|gorsaa|🌱
+coach|leenjisaa|🎯
+appraisal|madaallii hojii|📣
+incentive|jajjabeessituu|🚀
+bonus|dabalata|🌱
+salary|miindaa|🎯
+promotion|ol guddisuu|📣
+resign|hojii dhiisuu|🚀
+retire|hojii xumuruu umrii|🌱
+inquire|gaafachuu fedhii|🗣️
+inquiry|gaaffii|🎤
+assert|jabaatee dubbachuu|⚖️
+claim|himachuu|💭
+contend|falmuu cimaa|🗣️
+counter|deebisuu falmii|🎤
+refute|ragaan diduu|⚖️
+concede|dhaabbachuu fudhachuu|💭
+advocate|deeggaruu ol-aanaa|🗣️
+endorse|deeggarsa ifaa kennuu|🎤
+acknowledge|beekamtii kennuu|⚖️
+clarity|ifummaa|💭
+coherent|walitti hidhata|🗣️
+cogent|cimaa amansiisaa|🎤
+compelling|harkisaa|⚖️
+convey|geessuu yaada|💭
+deliberate|yaaduun|🗣️
+discern|adda baasuu|🎤
+dispute|wal-dhabdee|⚖️
+emphasis|cimsa|💭
+engage|hirmaachuu|🗣️
+explicit|ifatti ibsame|🎤
+implicit|dhoksaan ibsame|⚖️
+infer|yaada baasuu|💭
+insist|cimsanii gaafachuu|🗣️
+nuance|garaagarummaa xiqqaa|🎤
+outline|caasaa gabaabaa|⚖️
+paraphrase|haala biraatiin jechuu|💭
+premise|bu'uura yaadaa|🗣️
+pragmatic|hojii irratti hundaa'e|🎤
+reiterate|irra deebiʼanii jechuu|⚖️
+rational|sababaan|💭
+relevant|walitti hidhata qabu|🗣️
+stance|ilaalcha dhaabbataa|🎤
+substantiate|ragaan cimsuu|⚖️
+tone|sagalee haasaa|💭
+valid|sirrii kan ta'e|🗣️
+verbal|afaaniin|🎤
+viable|hojii irra ooluu danda'u|⚖️
+vivid|ifaa fi jiraataa|💭
+versatile|hojii baay'ee danda'u|🗣️
+ambitious|hawwii guddaa qabu|🏆
+agile|saffisaan jijjiiramu|💎
+adept|ogeessa|🧭
+astute|ilaalcha qabeessa|⭐
+authentic|dhugaa kan ta'e|🏆
+bold|ija jabeessa|💎
+candid|ifatti dubbataa|🧭
+comprehensive|waliigalaa|⭐
+consistent|walfakkaataa|🏆
+decisive|murteessaa|💎
+diligent|carraaqqii qabeessa|🧭
+disciplined|sirna qabeessa|⭐
+dynamic|jabeessaa|🏆
+enterprise|dhaabbata|💎
+ethical|safuu qabeessa|🧭
+genuine|dhugaa qabeessa|⭐
+inclusive|hunda kan of keessaa qabu|🏆
+influential|dhiibbaa qabu|💎
+innovative|kalaqaa|🧭
+meticulous|xiyyeeffannoo qabeessa|⭐
+optimistic|abdii qabeessa|🏆
+pessimistic|abdii dhabaa|💎
+profound|gad fagoo|🧭
+prudent|of eeggannoo qabeessa|⭐
+relentless|hin dhaabbatu|🏆
+robust|jabaa fi cimaa|💎
+sophisticated|ogummaa olaanaa|🧭
+tangible|qabatamaa|⭐
+intangible|hin qabatamne|🏆
+thorough|guutuu fi sirrii|💎
+tremendous|baay'ee guddaa|🧭
+ubiquitous|iddoo hundatti|⭐
+unprecedented|durii hin jirre|🏆
+vital|baay'ee barbaachisaa|💎
+paramount|ol-aanaa|🧭
+pivotal|ijoo kan ta'e|⭐
+preliminary|jalqabaa|🏆
+substantial|baay'ee|💎
+significant|barbaachisaa dha|🧭
+ultimate|dhumaa|⭐
+optional|filannoo|🏆
+capable|danda'aa|💎
+competent|dandeettii qabu|🧭
+proficient|ogummaa qabu|⭐
+efficient|saffisaa fi sirrii|🏆
+accelerate|saffisiisuu|⚡
+acquire|argachuu fi bitachuu|🔥
+adapt|of-jijjiiruu|🏗️
+adjust|sirreessuu|🛠️
+advance|dursuu|⚡
+allocate|ramaduu|🔥
+amend|fooyyessuu seera|🏗️
+anticipate|dursanii yaaduu|🛠️
+apply|fayyadamuu|⚡
+approve|ragaa kennuu|🔥
+assign|ramadaa kennuu|🏗️
+attain|gahuu hanga|🛠️
+authorize|aangoo kennuu|⚡
+coordinate|walitti qindeessuu|🔥
+customize|akka fedhiitti hojjechuu|🏗️
+cultivate|guddisuu fi kunuunsuu|🛠️
+demonstrate|agarsiisuu|⚡
+enable|danda'uu gochuu|🔥
+enhance|ol-guddisuu|🏗️
+ensure|mirkaneessuu|🛠️
+establish|dhaabuu|⚡
+expand|bal'isuu|🔥
+facilitate|salphisuu|🏗️
+finalize|xumuruu dhumaa|🛠️
+generate|oomishuu|⚡
+initiate|jalqabuu|🔥
+maintain|eeguu fi kunuunsuu|🏗️
+maximize|olaanaa gochuu|🛠️
+minimize|xiqqeessuu|⚡
+mobilize|sochoosuu|🔥
+overcome|dura dhaabbachuu|🏗️
+oversee|to'achuu|🛠️
+pursue|duukaa bu'uu|⚡
+refine|qulqulleessuu|🔥
+regulate|to'achuu seeraan|🏗️
+reinforce|jabeessuu|🛠️
+resolve|rakkoo furuu|⚡
+restructure|haaraan caasessuu|🔥
+streamline|adeemsa salphisuu|🏗️
+substitute|bakka buusuu|🛠️
+supervise|to'annoo gochuu|⚡
+sustain|itti fufsiisuu|🔥
+transform|jijjiiruu guutuu|🏗️
+undertake|itti fudhachuu|🛠️
+validate|sirrii ta'uu mirkaneessuu|⚡
+verify|dhugoomsuu|🔥
+withdraw|baasuu|🏗️`.split("\n").map(l=>{const[a,b,c]=l.split("|");return{en:a,om:b,e:c}});
+const MON=["Fulbaana","Onkololeessa","Sadaasa","Muddee","Amajjii","Guraandhala","Bitootessa","Ebla","Caamsaa","Waxabajjii","Adoolessa","Hagayya","Qaammee"];
+const S={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const $=s=>document.querySelector(s),V=$("#v"),ND=W.length/10;
+const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+let today=new Date(),T0=new Date(iso(today)+"T00:00");
+let start=S.g("start11",iso(new Date(T0-10*864e5)));if(!/^\d{4}-\d\d-\d\d$/.test(start)||new Date(start+"T00:00")>T0)start=iso(new Date(T0-10*864e5));S.s("start11",start);
+function ec(d){const j=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)+2440588,r=(j-1723856)%1461,n=r%365+365*Math.floor(r/1460);return{y:4*Math.floor((j-1723856)/1461)+Math.floor(r/365)-Math.floor(r/1460),m:Math.floor(n/30),d:n%30+1}}
+const dayNo=()=>Math.floor((T0-new Date(start+"T00:00"))/864e5)+1;
+const maxDay=()=>Math.min(Math.max(dayNo(),1),ND);
+let cur=maxDay(),tab="d",Q=null;
+function tick(){const n=new Date();if(iso(n)===iso(today))return;const was=cur===maxDay();today=n;T0=new Date(iso(n)+"T00:00");if(was)cur=maxDay();head();if(!Q)render()}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)tick()});addEventListener("focus",tick);setInterval(tick,60000);
+const words=n=>W.slice((n-1)*10,n*10);
+const say=t=>{try{const u=new SpeechSynthesisUtterance(t),v=speechSynthesis.getVoices().find(x=>/^en/i.test(x.lang));if(v)u.voice=v;u.lang="en-US";u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}};
+let AC;const beep=(f,d=.15,tp="sine")=>{try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=tp;o.frequency.value=f;g.gain.setValueAtTime(.15,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}};
+const sfx={ok(){beep(660,.12);setTimeout(()=>beep(880,.2),110)},no(){beep(180,.3,"sawtooth")},flip(){beep(420,.08,"triangle")}};
+function head(){const e=ec(today);$("#hd").textContent="Guyyaa "+dayNo()+" kan 100. "+MON[e.m]+" "+e.d+", "+e.y}
+function showD(){V.innerHTML=(dayNo()>ND?`<p class="mu">Guyyaa ${ND} booda jechoonni haaraan dhiyootti dhufa. Amma jechoota darbe irra deddeebiʼi.</p>`:"")+
+`<div class="row"><button class="sm" id="pv">‹</button><b>Guyyaa ${cur}</b><button class="sm" id="nx">›</button></div>`+
+`<div class="g">`+words(cur).map((w,i)=>`<div class="w" data-s="${w.en}" style="--i:${i}"><div class="f"><div class="ft"><span class="e">${w.e}</span><b>${w.en}</b></div><div class="bk"><b>${w.om}</b></div></div></div>`).join("")+`</div>`+
+`<p class="mu">Kaardii tuquun garagalchi, sagaleen isaas dhaggeeffama.</p><button class="big" id="all">🔊 Jechoota 10 hunda dhaggeeffadhu</button><label class="mu">Guyyaa jalqabaa (Gregorian): <input type="date" id="st" value="${start}"></label>`;
+$("#pv").onclick=()=>{if(cur>1){cur--;showD()}};$("#nx").onclick=()=>{if(cur<maxDay()){cur++;showD()}};
+V.querySelectorAll(".w").forEach(x=>x.onclick=()=>{x.classList.toggle("fl");sfx.flip();say(x.dataset.s)});
+$("#all").onclick=()=>{try{speechSynthesis.cancel();words(cur).forEach(w=>{const u=new SpeechSynthesisUtterance(w.en);u.lang="en-US";u.rate=.8;speechSynthesis.speak(u)})}catch(e){}};
+$("#st").onchange=e=>{if(e.target.value){start=e.target.value;S.s("start11",start);cur=maxDay();head();showD()}}}
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+let qd=0,lastQ=null;
+function mkQ(mode,day){let pool;
+if(mode==="d")pool=shuf(words(day));
+else{const wr=S.g("wrong",[]),all=W.slice(0,maxDay()*10);pool=shuf(all.flatMap(w=>wr.includes(w.en)?[w,w]:[w])).filter((w,i,a)=>a.indexOf(w)===i).slice(0,20)}
+lastQ={mode,day};
+Q={mode,day,i:0,sc:0,l:pool.map(w=>{const rev=Math.random()<.5,k=rev?"en":"om",a=rev?"om":"en";return{w,q:w[k],a:w[a],o:shuf([w[a]].concat(shuf(W.filter(x=>x!==w&&x[a]!==w[a])).slice(0,3).map(x=>x[a])))}})};showQ()}
+function showQ(){const m=maxDay();
+if(!Q){qd=Math.min(Math.max(qd||m,1),m);const b=S.g("scores",{})[qd];
+V.innerHTML=`<div class="row"><button class="sm" id="qp">‹</button><b>Guyyaa ${qd}${qd===m?" · har’a":""}</b><button class="sm" id="qn">›</button></div><p class="mu" style="text-align:center">${b!=null?"Qabxii olaanaa: "+b+" / 10":"Amma hin qoramne"}</p><button class="big" id="g1">📘 Quiz Guyyaa ${qd} · jechoota 10</button><button class="big alt" id="g2">🌍 Quiz walitti qabame · Guyyaa 1–${m}</button><p class="mu">Quiz guyyaa tokkoo jechoota guyyaa sana qofa gaafata. Quiz walitti qabame jechoota barattan hunda irraa gaafata (deebii dogoggoraa caalaatti).</p>`;
+$("#qp").onclick=()=>{if(qd>1){qd--;showQ()}};$("#qn").onclick=()=>{if(qd<m){qd++;showQ()}};
+$("#g1").onclick=()=>mkQ("d",qd);$("#g2").onclick=()=>mkQ("a",0);return}
+if(Q.i>=Q.l.length){const n=Q.l.length,r=Q.sc/n,msg=r===1?"🏆 Mudaa hin qabu!":r>=.7?"🎉 Baayʼee gaarii!":"💪 Itti fufi, irra deebiʼi!";
+if(Q.mode==="d"){const sc=S.g("scores",{});sc[Q.day]=Math.max(sc[Q.day]||0,Q.sc);S.s("scores",sc)}
+const t=todayKey(),st=S.g("streak",{d:"",n:0});
+if((Q.mode==="a"||Q.day===m)&&st.d!==t){const y=iso(new Date(T0-864e5));st.n=st.d===y?st.n+1:1;st.d=t;S.s("streak",st)}
+V.innerHTML=`<div class="q">${Q.sc} / ${n}</div><p class="mu" style="text-align:center">${msg}<br>Guyyaa walitti aansuun: ${st.n}</p><button class="big" id="go">Irra deebiʼi</button><button class="big alt" id="mn">Gara filannootti deebiʼi</button>`;
+const L=lastQ;Q=null;$("#go").onclick=()=>mkQ(L.mode,L.day);$("#mn").onclick=showQ;return}
+const q=Q.l[Q.i];V.innerHTML=`<div class="mu">Gaaffii ${Q.i+1} kan ${Q.l.length}</div><div class="q">${q.q}</div>`+q.o.map(o=>`<button class="o">${o}</button>`).join("");
+let done=false;V.querySelectorAll(".o").forEach(b=>b.onclick=()=>{if(done)return;done=true;const ok=b.textContent===q.a;b.classList.add(ok?"ok":"er");
+if(!ok)V.querySelectorAll(".o").forEach(x=>{if(x.textContent===q.a)x.classList.add("ok")});
+let wr=S.g("wrong",[]);wr=ok?wr.filter(x=>x!==q.w.en):wr.concat(q.w.en);S.s("wrong",[...new Set(wr)]);if(ok)Q.sc++;ok?sfx.ok():sfx.no();setTimeout(()=>say(q.w.en),350);
+V.insertAdjacentHTML("beforeend",`<button class="big" id="nq">Itti fufi</button>`);$("#nq").onclick=()=>{Q.i++;showQ()}})}
+const todayKey=()=>iso(T0);
+const PAL=[["#8b5cf6","#3b82f6","#06b6d4","#FFC857"],["#ec4899","#8b5cf6","#3b82f6","#ffd166"],["#10b981","#06b6d4","#6366f1","#b9f6ca"],["#f97316","#ec4899","#7c3aed","#ffe08a"],["#0ea5e9","#6366f1","#d946ef","#7fffd4"]];
+function showW(){const Wd=1080,H=2340,c=document.createElement("canvas");c.width=Wd;c.height=H;const x=c.getContext("2d"),F="system-ui,'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif",ws=words(cur),p=PAL[(cur-1)%5],cl=["#FFC857","#5fd0ff","#ff7aa2","#7dffb2","#c9a7ff"];
+let sd=cur*7919+13;const rd=()=>(sd=(sd*9301+49297)%233280)/233280;
+const bg=x.createLinearGradient(0,0,Wd*.7,H);bg.addColorStop(0,"#0b0640");bg.addColorStop(.5,"#140b52");bg.addColorStop(1,"#030717");x.fillStyle=bg;x.fillRect(0,0,Wd,H);
+x.globalCompositeOperation="lighter";
+[[120,380,700,0],[980,820,720,1],[160,1560,760,2],[940,2120,700,0],[540,40,560,3]].forEach(([a,b,r,i])=>{const o=x.createRadialGradient(a,b,0,a,b,r);o.addColorStop(0,p[i]+"99");o.addColorStop(1,p[i]+"00");x.fillStyle=o;x.fillRect(0,0,Wd,H)});
+for(let i=0;i<7;i++){const a=-.55+i*.18,L=1900,w=.07,o=x.createLinearGradient(540,-80,540+Math.sin(a)*L,-80+Math.cos(a)*L);o.addColorStop(0,"rgba(255,255,255,.16)");o.addColorStop(1,"rgba(255,255,255,0)");x.fillStyle=o;x.beginPath();x.moveTo(540,-80);x.lineTo(540+Math.sin(a-w)*L,-80+Math.cos(a-w)*L);x.lineTo(540+Math.sin(a+w)*L,-80+Math.cos(a+w)*L);x.fill()}
+[[0,1,.5],[1,2,.7],[2,0,.9]].forEach(([i,j,k],n)=>{const y0=300+n*620,o=x.createLinearGradient(0,0,Wd,0);o.addColorStop(0,p[i]+"00");o.addColorStop(.5,p[j]+"66");o.addColorStop(1,p[i]+"00");x.strokeStyle=o;x.lineWidth=150;x.lineCap="round";x.beginPath();x.moveTo(-100,y0+200*k);x.bezierCurveTo(300,y0-300,700,y0+500,Wd+100,y0-100*k);x.stroke()});
+for(let i=0;i<26;i++){const a=rd()*Wd,b=rd()*H,r=14+rd()*60,k=p[i%4],o=x.createRadialGradient(a,b,0,a,b,r);o.addColorStop(0,k+"55");o.addColorStop(.8,k+"22");o.addColorStop(1,k+"00");x.fillStyle=o;x.beginPath();x.arc(a,b,r,0,7);x.fill()}
+x.globalCompositeOperation="source-over";
+for(let i=0;i<150;i++){x.fillStyle="rgba(255,255,255,"+(.2+rd()*.7)+")";x.beginPath();x.arc(rd()*Wd,rd()*H,rd()*2.4+.4,0,7);x.fill()}
+const spk=(a,b,r,al)=>{x.save();x.globalAlpha=al;x.fillStyle="#fff";x.shadowColor=p[3];x.shadowBlur=26;x.beginPath();x.moveTo(a,b-r);x.quadraticCurveTo(a,b,a+r,b);x.quadraticCurveTo(a,b,a,b+r);x.quadraticCurveTo(a,b,a-r,b);x.quadraticCurveTo(a,b,a,b-r);x.fill();x.restore()};
+for(let i=0;i<22;i++)spk(rd()*Wd,rd()*H,10+rd()*26,.5+rd()*.5);
+const vg=x.createRadialGradient(540,1170,500,540,1170,1500);vg.addColorStop(0,"rgba(0,0,0,0)");vg.addColorStop(1,"rgba(0,0,10,.5)");x.fillStyle=vg;x.fillRect(0,0,Wd,H);
+const ball=(a,b,r,k)=>{const o=x.createRadialGradient(a-r*.35,b-r*.4,r*.05,a,b,r);o.addColorStop(0,"#fff");o.addColorStop(.28,k);o.addColorStop(1,"rgba(5,5,40,.9)");x.save();x.shadowColor=k;x.shadowBlur=50;x.fillStyle=o;x.beginPath();x.arc(a,b,r,0,7);x.fill();x.restore()};
+[[120,240,84,0],[950,420,56,1],[860,120,36,2],[90,640,44,3],[985,720,32,0],[80,2290,36,2],[1000,2290,54,1]].forEach(([a,b,r,i])=>ball(a,b,r,p[i%4]));
+const t3=(t,px,py,f,d,n)=>{for(let k=n;k>0;k--){x.fillStyle=d;x.fillText(t,px+k*.5,py+k)}x.fillStyle=f;x.fillText(t,px,py)};
+x.textAlign="center";const ls=v=>{if("letterSpacing"in x)x.letterSpacing=v};
+ls("12px");x.font="600 38px "+F;x.fillStyle="rgba(255,255,255,.85)";x.fillText("NAOL LEARNING",Wd/2,640);ls("0px");
+const tg=x.createLinearGradient(0,690,0,785);tg.addColorStop(0,"#fff");tg.addColorStop(1,p[3]);
+x.save();x.font="800 128px "+F;x.shadowColor=p[3]+"cc";x.shadowBlur=60;t3("Guyyaa "+cur,Wd/2,772,tg,p[0],12);x.restore();
+const dv=x.createLinearGradient(240,0,840,0);dv.addColorStop(0,"rgba(255,255,255,0)");dv.addColorStop(.5,p[3]);dv.addColorStop(1,"rgba(255,255,255,0)");x.fillStyle=dv;x.fillRect(240,818,600,4);spk(540,820,18,1);
+ws.forEach((w,i)=>{const y=850+i*140,a=cl[i%5],rr=()=>{x.beginPath();x.roundRect(56,y,968,124,40)};
+x.save();x.shadowColor="rgba(0,0,0,.6)";x.shadowBlur=36;x.shadowOffsetY=18;x.fillStyle="rgba(10,8,52,.72)";rr();x.fill();x.restore();
+x.save();rr();x.clip();const gl=x.createLinearGradient(0,y,0,y+124);gl.addColorStop(0,"rgba(255,255,255,.26)");gl.addColorStop(.5,"rgba(255,255,255,.04)");gl.addColorStop(1,a+"22");x.fillStyle=gl;x.fillRect(56,y,968,124);
+const sh=x.createLinearGradient(56,0,700,0);sh.addColorStop(0,a+"44");sh.addColorStop(1,a+"00");x.fillStyle=sh;x.fillRect(56,y,968,124);x.restore();
+x.save();const bd=x.createLinearGradient(56,y,1024,y+124);bd.addColorStop(0,a);bd.addColorStop(.5,"rgba(255,255,255,.6)");bd.addColorStop(1,a);x.strokeStyle=bd;x.lineWidth=3.5;x.shadowColor=a;x.shadowBlur=24;rr();x.stroke();x.restore();
+const bo=x.createRadialGradient(128,y+36,4,140,y+62,54);bo.addColorStop(0,"#fff");bo.addColorStop(.4,a);bo.addColorStop(1,"rgba(10,5,50,.9)");x.save();x.shadowColor=a;x.shadowBlur=28;x.fillStyle=bo;x.beginPath();x.arc(140,y+62,52,0,7);x.fill();x.restore();
+x.textAlign="center";x.font="54px "+F;x.fillStyle="#fff";x.fillText(w.e,140,y+80);
+x.textAlign="left";x.font="700 60px "+F;x.save();x.shadowColor=a;x.shadowBlur=18;t3(w.en,225,y+58,"#fff",a,5);x.restore();
+x.font="600 32px "+F;const tw=x.measureText(w.om).width;x.fillStyle=a+"33";x.beginPath();x.roundRect(222,y+76,tw+28,38,19);x.fill();x.fillStyle=a;x.fillText(w.om,236,y+104);
+x.textAlign="right";x.font="700 40px "+F;x.fillStyle="rgba(255,255,255,.2)";x.fillText(String(i+1).padStart(2,"0"),990,y+78)});
+x.textAlign="center";x.fillStyle="rgba(255,255,255,.85)";x.font="600 34px "+F;x.fillText("Guyyaa "+cur+" / 100",Wd/2,2290);
+x.fillStyle="rgba(255,255,255,.16)";x.beginPath();x.roundRect(240,2312,600,16,8);x.fill();
+const pg=x.createLinearGradient(240,0,840,0);pg.addColorStop(0,p[1]);pg.addColorStop(1,p[3]);x.save();x.shadowColor=p[3];x.shadowBlur=20;x.fillStyle=pg;x.beginPath();x.roundRect(240,2312,Math.max(16,6*cur),16,8);x.fill();x.restore();
+V.innerHTML=`<p class="mu">Wallpaper guyyaa ${cur}: jechoonni 10 hundi tokkotti. Suuraa irra yeroo dheeraa tuqi, “Save image” filadhu.</p><img alt="Wallpaper" src="${c.toDataURL("image/png")}"><button class="big" id="sv">Wallpaper buusi</button>`;
+$("#sv").onclick=()=>c.toBlob(async b=>{const nm="naol-learning-guyyaa-"+cur+".png";try{const d=window.claude&&await claude.use("downloads");if(d){await d.save({filename:nm,data:b});return}}catch(e){if(e&&e.code==="declined")return}
+try{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=nm;document.body.appendChild(a);a.click();a.remove()}catch(e){}})}
+
+function showC(){const e=ec(today),n=e.m===12?(e.y%4===3?6:5):30,s=new Date(start+"T00:00");let h=`<div class="q">${MON[e.m]} ${e.y}</div><div class="cal">`;
+for(let d=1;d<=n;d++){const dt=new Date(T0.getFullYear(),T0.getMonth(),T0.getDate()+d-e.d),k=Math.round((dt-s)/864e5)+1,ok=k>=1&&k<=ND&&k<=dayNo();
+h+=`<button class="c${d===e.d?" td":""}${ok?" ok2":""}" data-k="${ok?k:0}"><b>${d}</b><small>${k>=1&&k<=ND?"G"+k:""}</small></button>`}
+V.innerHTML=h+`</div><p class="mu">G = guyyaa barnootaa. Guyyaa banaa tuquun jechoota isaa ilaali.</p>`;
+V.querySelectorAll(".c").forEach(b=>b.onclick=()=>{const k=+b.dataset.k;if(k){cur=k;tab="d";render()}})}
+function render(){document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===tab));tab==="d"?showD():tab==="q"?showQ():tab==="c"?showC():showW()}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;render()});
+function initBG(){try{const cv=$("#bg"),R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true}),sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(60,1,.1,100);cam.position.z=14;
+const fit=()=>{R.setPixelRatio(Math.min(devicePixelRatio,1.5));R.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()};fit();addEventListener("resize",fit);
+const cols=["#FFC857","#7fd6ff","#ff8fa3","#b9f6ca","#ffffff"],P=[],M=[];
+for(let i=0;i<14;i++){const w=W[i%W.length],c=document.createElement("canvas");c.width=512;c.height=160;const x=c.getContext("2d");x.font="600 80px system-ui,sans-serif";x.textAlign="center";x.fillStyle=cols[i%5];x.shadowColor="rgba(0,0,0,.6)";x.shadowBlur=14;x.fillText(w.en,256,100);
+const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,opacity:.1+Math.random()*.12})),s=.55+Math.random()*.6;sp.scale.set(5*s,1.56*s,1);sp.position.set((Math.random()-.5)*34,(Math.random()-.5)*26,-14-Math.random()*20);sp.userData={v:.004+Math.random()*.01,p:Math.random()*6};sc.add(sp);P.push(sp)}
+const geo=new THREE.IcosahedronGeometry(1,0);for(let i=0;i<12;i++){const m=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:cols[i%4],wireframe:true,transparent:true,opacity:.1}));m.position.set((Math.random()-.5)*30,(Math.random()-.5)*22,-12-Math.random()*14);m.scale.setScalar(.6+Math.random()*1.6);sc.add(m);M.push(m)}
+let mx=0,my=0;addEventListener("pointermove",e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+addEventListener("deviceorientation",e=>{if(e.gamma!=null){mx=Math.max(-.5,Math.min(.5,e.gamma/60));my=Math.max(-.5,Math.min(.5,(e.beta-45)/90))}});
+const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+(function loop(t){P.forEach(s=>{s.position.y+=s.userData.v;s.position.x+=Math.sin(t/2000+s.userData.p)*.004;if(s.position.y>14)s.position.y=-14});M.forEach(m=>{m.rotation.x+=.004;m.rotation.y+=.006});cam.position.x+=(mx*6-cam.position.x)*.04;cam.position.y+=(-my*5-cam.position.y)*.04;cam.lookAt(0,0,0);R.render(sc,cam);if(!rm)requestAnimationFrame(loop)})(0)}catch(e){}}
+initBG();head();render();
+</script></body></html>
